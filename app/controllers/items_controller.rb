@@ -8,6 +8,13 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
+    @item.category_id = 1
+    @item.condition_id = 1
+    @item.postage_type_id = 1
+    @item.prefecture_id = 1
+    @item.shipping_time_id = 1
+    binding.pry
+
     if @item.valid?
       @item.save
       return redirect_to root_path
