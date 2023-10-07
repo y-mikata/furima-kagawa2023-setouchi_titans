@@ -1,8 +1,9 @@
 class Item < ApplicationRecord
-  validates :name, :info, :price, presence: true
+  validates :name, :info, :price, :image, presence: true
   
   belongs_to :user
   # has_one :order
+  has_one_attached :image
   
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
