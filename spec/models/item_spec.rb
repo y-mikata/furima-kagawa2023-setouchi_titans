@@ -35,17 +35,17 @@ RSpec.describe Item, type: :model do
       it 'priceが半角数値でないと保存できない' do
         @item.price = 'hankaku'
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price is not a number"
+        expect(@item.errors.full_messages).to include 'Price is not a number'
       end
       it 'priceが300未満だと保存できない' do
         @item.price = 250
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price must be greater than or equal to 300"
+        expect(@item.errors.full_messages).to include 'Price must be greater than or equal to 300'
       end
       it 'priceが9,999,999より大きいと保存できない' do
         @item.price = 11_111_111
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price must be less than or equal to 9999999"
+        expect(@item.errors.full_messages).to include 'Price must be less than or equal to 9999999'
       end
       it 'category_idが --- では保存できない' do
         @item.category_id = 1
