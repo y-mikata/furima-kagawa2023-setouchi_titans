@@ -1,11 +1,10 @@
 class Item < ApplicationRecord
   validates :name, :info, :image, presence: true
-  validates :price, presence: true, format: { with: /\A\d+\z/ },
+  validates :price, presence: true, 
     numericality: { 
       only_integer: true, 
       greater_than_or_equal_to: 300, 
-      less_than_or_equal_to: 9_999_999,
-      message: "is invalid" 
+      less_than_or_equal_to: 9_999_999
     }
 
   belongs_to :user
