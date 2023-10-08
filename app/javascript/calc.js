@@ -4,9 +4,9 @@ function calc (){
     const addTaxVal = Math.floor(itemPrice.value * 0.1);
     const profitVal = Math.floor(itemPrice.value * 0.9);
     const addTaxPrice  = document.getElementById("add-tax-price");
-    addTaxPrice.innerHTML = addTaxVal;
     const profit  = document.getElementById("profit");
-    profit.innerHTML = profitVal;
+    addTaxPrice.innerHTML = addTaxVal.toLocaleString();
+    profit.innerHTML = profitVal.toLocaleString();
   });
 };
 
