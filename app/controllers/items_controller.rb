@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new]
 
   def index
+    @items = Item.all
   end
 
   def new
@@ -16,6 +17,11 @@ class ItemsController < ApplicationController
     else
       render 'new', status: :unprocessable_entity
     end
+  end
+
+  def show
+    @items = Item.find(params[:id])
+    
   end
 
   private
