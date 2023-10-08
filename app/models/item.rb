@@ -20,6 +20,6 @@ class Item < ApplicationRecord
   belongs_to :shipping_time
 
   validates :category_id, :condition_id, :postage_type_id, :prefecture_id,
-   :shipping_time_id, numericality: { other_than: 2, message: "can't be blank" } 
+   :shipping_time_id, numericality: { other_than: 1, message: "can't be blank" } 
 
 end
