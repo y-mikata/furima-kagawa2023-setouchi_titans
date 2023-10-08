@@ -161,7 +161,7 @@
       <%# 商品がある場合は表示されないようにしましょう %>
       <li class='list'>
         <% @items.each do |item| %>
-          <%= link_to item_path(item.id) do %>
+          <%= link_to item_path(item) do %>
             <%= image_tag(item.image, class: "item-img") %>
         <% end %>
         <%#= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
