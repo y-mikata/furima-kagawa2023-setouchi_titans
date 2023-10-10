@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
 
   def edit
   end
-  
+
   def update
     if @item.update(item_params)
       redirect_to item_path(params[:id])
