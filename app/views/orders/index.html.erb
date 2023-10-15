@@ -33,7 +33,7 @@
 
     <%= include_gon %>
 
-    <%= form_with model: @order, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
+    <%= form_with model: @order_address, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
       <h1 class='info-input-haedline'>
@@ -69,11 +69,9 @@
         <div id="cvc-form" class="input-default"></div>
       </div>
     </div>
-    <% end %>
     <%# /カード情報の入力 %>
     
     <%# 配送先の入力 %>
-    <%= form_with model: @order_address, url: items_path, local: true do |f| %>
     <div class='shipping-address-form'>
       <h1 class='info-input-haedline'>
         配送先入力
