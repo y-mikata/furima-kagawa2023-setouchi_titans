@@ -64,5 +64,10 @@ RSpec.describe Order, type: :model do
       @order.valid?
       expect(@order.errors.full_messages).to include('Phone number is too short')
     end
+    it 'userが紐付いていないと保存できないこと' do
+      @order.user_id = nil
+      @order.valid?
+      expect(@order.errors.full_messages).to include("User can't be blank")
+    end
   end
 end
