@@ -24,9 +24,9 @@
     </div>
 
     <% if user_signed_in? && current_user.id == @item.user_id && @item.order.blank? %>
-      <%= link_to "商品の編集", "#edit_item_path", method: :get, class: "item-red-btn" %>
+      <%= link_to "商品の編集", edit_item_path(@item.id), method: :get, class: "item-red-btn" %>
         <p class="or-text">or</p>
-      <%= link_to "削除", "#item_path(@item.id)", data: { turbo_method: :delete }, class:"item-destroy" %>
+      <%= link_to "削除", item_path(@item.id), data: { turbo_method: :delete }, class:"item-destroy" %>
     <% else %>
       <% if user_signed_in? && @item.order.blank? %>
         <%= link_to "購入画面に進む", item_orders_path(@item.id) ,class:"item-red-btn"%>
@@ -40,7 +40,7 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= @item.name %></td>
+          <td class="detail-value"><%= @item.user.nickname %></td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
