@@ -59,15 +59,25 @@ RSpec.describe Order, type: :model do
       @order.valid?
       expect(@order.errors.full_messages).to include('Phone number is invalid. Input only numbers')
     end
-    it '電話番号が10桁以上11桁以内の半角数値のみ保存可能なこと' do
+    it '電話番号が9桁以下では購入できない' do
       @order.phone_number = '123456789'
       @order.valid?
       expect(@order.errors.full_messages).to include('Phone number is too short')
+    end
+    it '電話番号が12桁以上では購入できない' do
+      @order.phone_number = '012345678910'
+      @order.valid?
+      expect(@order.errors.full_messages).to include('Phone number is too long')
     end
     it 'userが紐付いていないと保存できないこと' do
       @order.user_id = nil
       @order.valid?
       expect(@order.errors.full_messages).to include("User can't be blank")
+    end
+    it 'itemが紐付いていないと保存できないこと' do
+      @order.item_id = nil
+      @order.valid?
+      expect(@order.errors.full_messages).to include("Item can't be blank")
     end
   end
 end
