@@ -366,11 +366,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
-<<<<<<< Updated upstream
-  x86_64-linux
-=======
-  x86_64-darwin-23
->>>>>>> Stashed changes
+  x86_64-darwin-23  
 
 DEPENDENCIES
   active_hash
