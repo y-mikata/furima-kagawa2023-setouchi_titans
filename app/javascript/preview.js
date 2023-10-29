@@ -14,5 +14,6 @@ document.addEventListener('turbo:load', function(){
 
     const previewImage = document.createElement('img');
     previewImage.setAttribute('class', 'preview-image');
+    previewImage.setAttribute('src', blob);
   });
 });
