@@ -93,3 +93,8 @@ gem "aws-sdk-s3", require: false
 group :production do
   gem 'unicorn', '6.1.0'
 end
+
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection"
+gem 'omniauth', '~>2.1.1'
