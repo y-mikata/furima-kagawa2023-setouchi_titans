@@ -48,13 +48,18 @@ document.addEventListener("turbo:load", function () {
     // data-index（何番目を操作しているか）を取得
     const dataIndex = e.target.getAttribute("data-index");
 
-    // 古いプレビューが存在する場合は削除
-    const alreadyPreview = document.querySelector(".preview");
-    if (alreadyPreview) {
-      alreadyPreview.remove();
-    }
     const file = e.target.files[0];
     const blob = window.URL.createObjectURL(file);
+
+    // data-indexを使用して、すでにプレビューが表示されているかを確認する
+    const alreadyPreview = document.querySelector(`.preview[data-index="${dataIndex}"]`);
+
+    if (alreadyPreview) {
+      // クリックしたfile_fieldのdata-indexと、同じ番号のプレビュー画像がすでに表示されている場合は、画像の差し替えのみを行う
+      const alreadyPreviewImage = alreadyPreview.querySelector("img");
+      alreaqdyPreviewImage.setAttribute("src", blob);
+      return null;
+    }
 
     buildPreviewImage(dataIndex, blob);
     buildNewFileField();
