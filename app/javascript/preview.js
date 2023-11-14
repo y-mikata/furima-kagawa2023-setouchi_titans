@@ -18,10 +18,20 @@ document.addEventListener("turbo:load", function () {
     previewImage.setAttribute("class", "preview-image");
     previewImage.setAttribute("src", blob);
 
+    // 削除ボタンを生成
+    const deleteButton = document.createElement("div");
+    deleteButton.setAttribute("class", "image-delete-button");
+    deleteButton.innerText = "削除";
+
+    // 削除ボタンをクリックしたらプレビューとifle_fieldを削除させる
+    deleteButton.addEventListener("click", () => deleteImage(dataIndex));
+
     // 生成したHTMLの要素をブラウザに表示させる
     previewWrapper.appendChild(previewImage);
+    previewWrapper.appendChild(deleteButton);
     previewList.appendChild(previewWrapper);
   };
+
   // file_fieldを生成・表示する関数
   const buildNewFileField = () => {
     // 2枚目用のfile_fieldを作成
@@ -72,7 +82,7 @@ document.addEventListener("turbo:load", function () {
     if (alreadyPreview) {
       // クリックしたfile_fieldのdata-indexと、同じ番号のプレビュー画像がすでに表示されている場合は、画像の差し替えのみを行う
       const alreadyPreviewImage = alreadyPreview.querySelector("img");
-      alreaqdyPreviewImage.setAttribute("src", blob);
+      alreadyPreviewImage.setAttribute("src", blob);
       return null;
     }
 
