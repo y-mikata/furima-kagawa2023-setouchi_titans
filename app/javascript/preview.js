@@ -1,4 +1,4 @@
-document.addEventListener("turbo:load", function () {
+const imageUploadPreview = () => {
   // 新規投稿・編集ページのフォームを取得
   const itemForm = document.getElementById("new_item");
   // プレビューを表示するためのスペースを取得
@@ -105,4 +105,7 @@ document.addEventListener("turbo:load", function () {
 
   // input要素で値の変化が起きた際に呼び出される関数
   fileField.addEventListener("change", changedFileField);
-});
+};
+
+document.addEventListener("turbo:load", imageUploadPreview);
+document.addEventListener("turbo:render", imageUploadPreview);
