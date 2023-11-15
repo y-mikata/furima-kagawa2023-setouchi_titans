@@ -29,23 +29,33 @@
   height: 50vh;
   width: 60vw;
   min-height: 500px;
+  min-width: 500px;
   background-color: rgb(205, 202, 202);
   object-fit: contain;
 }
 
 .thumbnail-images {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .thumbnail-image {
-  margin-right: 10px;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(205, 202, 202);
+  margin: 5px;
+  overflow: hidden;
 }
 
 .thumbnail-image img {
-  width: 100px;
-  height: auto;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .thumbnail-image img:not(.active-thumbnail):hover {
@@ -57,13 +67,6 @@
   box-sizing: border-box;
   filter: brightness(80%);
   padding: 1px;
-  background-color: white;
-}
-
-.image-delete-button {
-  text-align: center;
-  border: solid 1px;
-  cursor: pointer;
 }
 
 .item-price-box {
