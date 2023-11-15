@@ -33,12 +33,31 @@
   object-fit: contain;
 }
 
-.other-images {
+.thumbnail-images {
   display: flex;
 }
 
-.other-image {
+.thumbnail-image {
   margin-right: 10px;
+}
+
+.thumbnail-image img {
+  width: 100px;
+  height: auto;
+  cursor: pointer;
+  object-fit: contain;
+}
+
+.thumbnail-image img:not(.active-thumbnail):hover {
+  opacity: 0.6;
+}
+
+.active-thumbnail {
+  border: 2px solid #707070;
+  box-sizing: border-box;
+  filter: brightness(80%);
+  padding: 1px;
+  background-color: white;
 }
 
 .image-delete-button {

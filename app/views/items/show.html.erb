@@ -7,16 +7,16 @@
       <%= @item.name %>
     </h2>
     <div class="item-img-content">
-      <%= image_tag(@item.images[0], class:"item-box-img") %><br>
+      <%= image_tag(@item.images[0], class:"item-box-img", id:"main-img") %><br>
       <% if @item.order %>
         <div class="sold-out">
           <span>Sold Out!!</span>
         </div>
       <% end %>
-      <div class="other-images">
-        <% @item.images[1..-1].each do |image| %>
-          <div class="other-image">
-            <%= image_tag image %>
+      <div class="thumbnail-images">
+        <% @item.images.each_with_index do |image, index| %>
+          <div class="thumbnail-image">
+            <%= image_tag image, class: (index == 0 ? 'active-thumbnail' : '') %>
           </div>
         <%end%>
       </div>
