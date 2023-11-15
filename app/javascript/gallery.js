@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbo:load", () => {
   const thumbnails = document.querySelectorAll(".thumbnail-image img");
 
   thumbnails.forEach((img) => {
