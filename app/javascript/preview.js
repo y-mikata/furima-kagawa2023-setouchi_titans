@@ -25,6 +25,7 @@ const imageUploadPreview = () => {
     const deleteButton = document.createElement("div");
     deleteButton.setAttribute("class", "image-delete-button");
     deleteButton.innerText = "削除";
+    deleteButton.setAttribute("data-index", dataIndex);
 
     // 削除ボタンをクリックしたらプレビューとifle_fieldを削除させる
     deleteButton.addEventListener("click", () => deleteImage(dataIndex));
@@ -42,30 +43,66 @@ const imageUploadPreview = () => {
     newFileField.setAttribute("type", "file");
     newFileField.setAttribute("name", "item[images][]");
 
-    // 最後のfile_fieldを取得
-    const lastFileField = document.querySelector('input[type="file"][name="item[images][]"]:last-child');
-    // nextDataIndex = 最後のfile_fieldのdata-index + 1
-    const nextDataIndex = Number(lastFileField.getAttribute("data-index")) + 1;
-    newFileField.setAttribute("data-index", nextDataIndex);
-
-    // 追加されたfile_fieldにchangeイベントをセット
-    newFileField.addEventListener("change", changedFileField);
-
     // 生成したfile_fieldを表示
     const fileFieldsArea = document.querySelector(".click-upload");
+    const fileInputsCount = fileFieldsArea.querySelectorAll('input[type="file"]').length;
+    // Remove any text nodes that are direct children of the fileFieldsArea.
+    Array.from(fileFieldsArea.childNodes).forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && !/\S/.test(node.nodeValue)) {
+        node.remove();
+      }
+    });
+    newFileField.setAttribute("data-index", fileInputsCount);
+    newFileField.addEventListener("change", changedFileField);
     fileFieldsArea.appendChild(newFileField);
   };
 
   // 指定したdata-indexを持つプレビューとfile_fieldを削除する
   const deleteImage = (dataIndex) => {
+    // Delete the preview
     const deletePreviewImage = document.querySelector(`.preview[data-index="${dataIndex}"]`);
-    deletePreviewImage.remove();
-    const deleteFileField = document.querySelector(`input[type="file"][data-index="${dataIndex}"]`);
-    deleteFileField.remove();
+    if (deletePreviewImage) {
+      deletePreviewImage.remove();
+    }
 
-    // 画像の枚数が最大の時に削除ボタンを押した場合、file_fieldを1つ追加する
+    // Delete the file field and clear its value
+    const deleteFileField = document.querySelector(`input[type="file"][data-index="${dataIndex}"]`);
+    if (deleteFileField) {
+      deleteFileField.remove();
+    }
+
+    // Update the indexes of remaining file fields
+    updateIndexes();
+
+    // Remove the last file field if it's empty
+    const fileFieldsArea = document.querySelector(".click-upload");
+    const lastFileField = fileFieldsArea.querySelector('input[type="file"]:last-child');
+    if (lastFileField && lastFileField.files.length === 0) {
+      lastFileField.remove();
+    }
+
+    // Check if a new file field should be added
     const imageCount = document.querySelectorAll(".preview").length;
-    if (imageCount == imageLimits - 1) buildNewFileField();
+    const fileInputCount = fileFieldsArea.querySelectorAll('input[type="file"]').length;
+    if (imageCount < imageLimits && fileInputCount < imageLimits) {
+      buildNewFileField();
+    }
+  };
+
+  const updateIndexes = () => {
+    const fileFields = document.querySelectorAll('input[type="file"][name="item[images][]"]');
+    fileFields.forEach((field, index) => {
+      field.setAttribute("data-index", index);
+    });
+
+    const previews = document.querySelectorAll(".preview");
+    previews.forEach((preview, index) => {
+      preview.setAttribute("data-index", index);
+      const oldDeleteButton = preview.querySelector(".image-delete-button");
+      const newDeleteButton = oldDeleteButton.cloneNode(true);
+      oldDeleteButton.parentNode.replaceChild(newDeleteButton, oldDeleteButton);
+      newDeleteButton.addEventListener("click", () => deleteImage(index));
+    });
   };
 
   // input要素で値の変化が起きた際に呼び出される関数の中身
