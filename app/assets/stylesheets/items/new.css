@@ -75,8 +75,8 @@
 /* 商品画像 */
 .img-upload {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 2vh 0;
 }
 
@@ -87,6 +87,26 @@
 
 .click-upload>p {
   margin-bottom: 15px;
+}
+
+#previews {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.image-delete-button {
+  text-align: center;
+  border: solid 1px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  margin-right: 10px;
 }
 
 /* /商品画像 */

@@ -65,7 +65,7 @@ class ItemsController < ApplicationController
       :postage_type_id,
       :prefecture_id,
       :shipping_time_id,
-      :image
+      { images: [] }
     ).merge(user_id: current_user.id)
   end
 
