@@ -1,7 +1,7 @@
 /* 下部広告部分 */
 /* items/index.htmlの広告cssを所々使いまわしています。 */
 
-.ad-footer-contents {
+/* .ad-footer-contents {
   width: 100vw;
   background-image: image-url('furima-footer.png');
   background-size: cover;
@@ -24,7 +24,7 @@
 .ad-footer-explain {
   font-size: 3vh;
   line-height: 30px;
-}
+} */
 
 /* //下部広告部分 */
 
