@@ -1,0 +1,11 @@
+<div class="user-profile">
+  <h1><%= current_user.first_name %>さん</h1>
+</div>
+<div class="user-actions-wrapper">
+  <div class="user-actions">
+    <%= link_to 'いいね！一覧', likes_user_path(@user) %>
+    <%= link_to '出品した商品', items_user_path(@user) %>
+    <%= link_to '購入履歴', orders_user_path(@user) %>
+    <%= link_to 'クレジットカード一覧', cards_user_path(@user) %>
+  </div>
+</div>
