@@ -1,1 +1,111 @@
+.mypage {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
+.sidebar {
+  flex: 0 0 250px;
+  margin-right: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar-header {
+  font-size: 16px;
+  color: #333;
+  padding: 10px 0;
+  border-bottom: 2px solid #eaeaea;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.sidebar-nav {
+  list-style: none;
+}
+
+.sidebar-nav li {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.sidebar-nav a {
+  width: 100%;
+  padding: 20px;
+  text-decoration: none;
+  color: #333;
+  display: block;
+  box-sizing: border-box;
+}
+
+.sidebar-nav :hover, .sidebar .active {
+  background-color: #f8f8f8;
+}
+
+.content {
+  text-align: center;
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.user-profile h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.user-actions-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.user-actions {
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.user-actions a {
+  color: #333;
+  display: block;
+  padding: 10px;
+  width: 150px;
+  height: 100px;
+  text-decoration: none;
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid #eaeaea;
+  cursor: pointer;
+}
+
+.user-actions div:hover {
+  background-color: #f0f0f0;
+}
+
+/* Specific styles for icons can be added here */
+.fa {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+
+  .mypage {
+    flex-direction: column;
+  }
+
+  /* Adjust breakpoint as needed */
+  .sidebar {
+    flex-basis: 100%;
+    order: 2;
+    /* Puts the sidebar below the content area */
+    margin-right: 0;
+  }
+
+  .content {
+    flex-basis: 100%;
+    order: 1;
+    padding: 0;
+  }
+}

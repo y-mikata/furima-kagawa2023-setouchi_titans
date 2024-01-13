@@ -5,5 +5,12 @@ Rails.application.routes.draw do
   resources :items do
     resources :orders, only: [:index, :create]
   end
-  resources :users, only: :show
+  resources :users, only: :show do
+    member do
+      get 'likes'
+      get 'items'
+      get 'orders'
+      get 'cards'
+    end
+  end
 end
