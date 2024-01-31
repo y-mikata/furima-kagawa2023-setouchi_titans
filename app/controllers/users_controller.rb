@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :likes, :items, :orders, :cards]
+  before_action :set_user, only: [:show, :likes, :items, :orders]
   before_action :authenticate_user!
   before_action :contributor_confirmation
   layout 'user'
@@ -13,9 +13,6 @@ class UsersController < ApplicationController
   end
 
   def orders
-  end
-
-  def cards
   end
 
   private

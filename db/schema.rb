@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_11_142413) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_27_145414) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -52,6 +52,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_142413) do
     t.index ["order_id"], name: "index_addresses_on_order_id"
   end
 
+  create_table "cards", charset: "utf8", force: :cascade do |t|
+    t.string "card_id", null: false
+    t.string "last4", null: false
+    t.string "exp_month", null: false
+    t.string "exp_year", null: false
+    t.boolean "is_default", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_cards_on_user_id"
+  end
+
   create_table "items", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.text "info", null: false
@@ -90,6 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_142413) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payjp_customer_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -97,6 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_142413) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "orders"
+  add_foreign_key "cards", "users"
   add_foreign_key "items", "users"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"

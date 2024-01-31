@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'cards/new'
   get 'users/show'
   devise_for :users
   root to: "items#index"
@@ -6,11 +7,15 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :create]
   end
   resources :users, only: :show do
+    resources :cards, only: [:index, :new, :create, :destroy] do
+      member do
+        post 'set_default'
+      end
+    end
     member do
       get 'likes'
       get 'items'
       get 'orders'
-      get 'cards'
     end
   end
 end

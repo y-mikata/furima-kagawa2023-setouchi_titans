@@ -1,0 +1,129 @@
+section.mdc .row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+section.mdc .field {
+  position: relative;
+  width: 100%;
+  margin: 0 10px;
+}
+
+section.mdc * {
+  font-family: 'Noto Sans Japanese', sans-serif;
+}
+
+/* 各所のMDCデフォルトのカラーリングを上書き */
+/* カーソル */
+section.mdc .mdc-text-field:not(.mdc-text-field--invalid) .mdc-text-field__input {
+  caret-color: #198fcc;
+  caret-color: var(--payjp-primary-color);
+}
+
+/* ラベル */
+section.mdc .mdc-text-field--focused:not(.mdc-text-field--invalid) .mdc-floating-label {
+  color: #198fcc;
+  color: var(--payjp-primary-color);
+}
+
+/* ボーダーライン */
+section.mdc .mdc-text-field--filled:not(.mdc-text-field--invalid) .mdc-line-ripple::after {
+  border-bottom-color: #198fcc;
+  border-bottom-color: var(--payjp-primary-color);
+}
+
+/* ボタン */
+.mdc-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 64px;
+  border: none;
+  outline: none;
+  line-height: inherit;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: visible;
+  vertical-align: middle;
+  background: transparent
+}
+
+.mdc-button:active {
+  outline: none
+}
+
+.mdc-button:hover {
+  cursor: pointer
+}
+
+.mdc-button:disabled {
+  cursor: default;
+  pointer-events: none
+}
+
+.mdc-button--raised {
+  font-family: Roboto, sans-serif;
+  font-family: var(--mdc-protected-button-label-text-font, var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif)));
+  font-size: 0.875rem;
+  font-size: var(--mdc-protected-button-label-text-size, var(--mdc-typography-button-font-size, 0.875rem));
+  letter-spacing: 0.0892857143em;
+  letter-spacing: var(--mdc-protected-button-label-text-tracking, var(--mdc-typography-button-letter-spacing, 0.0892857143em));
+  font-weight: 500;
+  font-weight: var(--mdc-protected-button-label-text-weight, var(--mdc-typography-button-font-weight, 500));
+  text-transform: uppercase;
+  text-transform: var(--mdc-protected-button-label-text-transform, var(--mdc-typography-button-text-transform, uppercase));
+  height: 36px;
+  height: var(--mdc-protected-button-container-height, 36px);
+  border-radius: 4px;
+  border-radius: var(--mdc-protected-button-container-shape, var(--mdc-shape-small, 4px));
+  --mdc-elevation-box-shadow-for-gss: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--mdc-protected-button-container-elevation, var(--mdc-elevation-box-shadow-for-gss))
+}
+
+.mdc-button--raised:not(:disabled) {
+  background-color: #6200ee;
+  background-color: var(--mdc-protected-button-container-color, var(--mdc-theme-primary, #6200ee))
+}
+
+.mdc-button--raised:disabled {
+  background-color: rgba(0, 0, 0, 0.12);
+  background-color: var(--mdc-protected-button-disabled-container-color, rgba(0, 0, 0, 0.12))
+}
+
+.mdc-button--raised:not(:disabled) {
+  color: #fff;
+  color: var(--mdc-protected-button-label-text-color, var(--mdc-theme-on-primary, #fff))
+}
+
+.mdc-button--raised:disabled {
+  color: rgba(0, 0, 0, 0.38);
+  color: var(--mdc-protected-button-disabled-label-text-color, rgba(0, 0, 0, 0.38))
+}
+
+.mdc-button--raised:hover {
+  --mdc-elevation-box-shadow-for-gss: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--mdc-protected-button-hover-container-elevation, var(--mdc-elevation-box-shadow-for-gss))
+}
+
+.mdc-button--raised:not(:disabled):active {
+  --mdc-elevation-box-shadow-for-gss: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--mdc-protected-button-pressed-container-elevation, var(--mdc-elevation-box-shadow-for-gss))
+}
+
+.mdc-button--raised:disabled {
+  --mdc-elevation-box-shadow-for-gss: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--mdc-protected-button-disabled-container-elevation, var(--mdc-elevation-box-shadow-for-gss))
+}
+
+
+section.mdc .mdc-button.mdc-button--raised:not(:disabled) {
+  background-color: var(--payjp-primary-color);
+}

@@ -1,0 +1,48 @@
+<h2>クレジットカード一覧</h2>
+<%= link_to 'New Card', new_user_card_path, class: 'btn btn-primary' %>
+<!-- Added a class for styling -->
+
+<% if @cards.present? %>
+  <!-- Using .present? to ensure @cards is not empty -->
+  <% @cards.each do |card| %>
+    <div class="card mb-3 <%= 'default-card' if card.is_default %>">
+      <!-- Changed class for styling and added margin-bottom -->
+      <div class="card-header">
+        <h3>カード情報</h3>
+        <!-- Changed to h3 for proper heading hierarchy -->
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <!-- Used paragraph for text for better semantics -->
+          【カード番号】<br />
+          <%= '**** **** **** ' + card.last4 %>
+          <!-- Using block variable 'card' -->
+        </p>
+        <p class="card-text">
+          【有効期限】<br />
+          <%= card.exp_month %>/<%= card.exp_year %>
+          <!-- Using block variable 'card' -->
+        </p>
+        <% unless card.is_default %>
+          <%=
+            button_to 'Set Default',
+                      set_default_user_card_path(current_user, card),
+                      method: :post,
+                      class: 'btn btn-primary'
+          %>
+        <% end %>
+        <%=
+          button_to 'Delete',
+                    user_card_path(current_user, card),
+                    method: :delete,
+                    data: {
+                      confirm: 'Are you sure?',
+                    },
+                    class: 'btn btn-danger'
+        %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>No cards available. Please add a new card.</p>
+<% end %>

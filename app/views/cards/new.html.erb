@@ -1,0 +1,38 @@
+<%= stylesheet_link_tag 'base', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag 'mdc-common', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag 'mdc-on-v2', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<%= include_gon %>
+
+<main>
+  <section class="mdc" id="v2-mdc">
+    <h1>カード登録</h1>
+    <%= form_with  url: user_cards_path, id: 'charge-form', class: 'card-form',local: true do |f| %>
+      <div class="row">
+        <div class="field text-field">
+          <div id="number-form" class="text-field__input"></div>
+          <span class="text-field__ripple"></span>
+          <span class="floating-label">カード番号</span>
+          <span class="line-ripple"></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field text-field">
+          <div id="expiry-form" class="text-field__input"></div>
+          <span class="text-field__ripple"></span>
+          <span class="floating-label">有効期限</span>
+          <span class="line-ripple"></span>
+        </div>
+        <div class="field text-field">
+          <div id="cvc-form" class="text-field__input"></div>
+          <span class="text-field__ripple"></span>
+          <span class="floating-label">CVC</span>
+          <span class="line-ripple"></span>
+        </div>
+      </div>
+      <div class="row">
+        <%= f.submit '登録する', class: 'field mdc-button mdc-button--raised', id: 'button' %>
+      </div>
+    <% end %>
+  </section>
+</main>
