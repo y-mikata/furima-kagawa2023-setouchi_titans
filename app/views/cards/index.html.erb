@@ -14,6 +14,12 @@
       <div class="card-body">
         <p class="card-text">
           <!-- Used paragraph for text for better semantics -->
+          【ブランド】<br />
+          <%= card.brand %>
+          <!-- Using block variable 'card' -->
+        </p>
+        <p class="card-text">
+          <!-- Used paragraph for text for better semantics -->
           【カード番号】<br />
           <%= '**** **** **** ' + card.last4 %>
           <!-- Using block variable 'card' -->

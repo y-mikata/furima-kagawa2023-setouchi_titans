@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_27_145414) do
 
   create_table "cards", charset: "utf8", force: :cascade do |t|
     t.string "card_id", null: false
+    t.string "brand", null: false
     t.string "last4", null: false
     t.string "exp_month", null: false
     t.string "exp_year", null: false

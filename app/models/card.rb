@@ -3,5 +3,5 @@ class Card < ApplicationRecord
   attr_accessor :token
 
   validates :token, presence: true, on: :create
-  encrypts :last4, :exp_month, :exp_year
+  encrypts :brand, :last4, :exp_month, :exp_year
 end

@@ -17,28 +17,24 @@ class CardsController < ApplicationController
     end
 
     if current_user.payjp_customer_id
-      # Retrieve the existing customer from Payjp
       customer = Payjp::Customer.retrieve(current_user.payjp_customer_id)
-      # Create a new card for the existing customer
       payjp_card = customer.cards.create(card: params[:token])
     else
-      # No card exists, create a new customer and associate a card
       customer = Payjp::Customer.create(
         email: current_user.email,
         description: "Customer association for user_id #{current_user.id}",
-        card: params[:token] # Token from the form
+        card: params[:token]
       )
       current_user.update_column(:payjp_customer_id, customer.id)
       payjp_card = customer.cards.data.first
     end
 
-    # Create a new card object in your database
     card = current_user.cards.build(
       token: params[:token],
       card_id: payjp_card.id,
+      brand: payjp_card.brand,
       last4: payjp_card.last4,
-      exp_month: payjp_card.exp_month,
-      exp_year: payjp_card.exp_year,
+      exp_month: payjp_card.exp_month, exp_year: payjp_card.exp_year,
       is_default: payjp_card.id == customer.default_card
     )
 
