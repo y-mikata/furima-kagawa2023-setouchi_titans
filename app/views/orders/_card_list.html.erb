@@ -1,0 +1,32 @@
+<%= form_with url: '#', id: 'card-selection-form', method: :patch, local: true, html: { autocomplete: "off" }, data: { action: "submit->checkout#closeCardList" } do |form| %>
+  <% @cards.each do |card| %>
+    <div class="card-item <%= 'expired' if card.expired? %>">
+      <%=
+        radio_button_tag 'selected_card_id',
+                         card.id,
+                         card == @selected_card,
+                         class: 'card-selection-radio',
+                         data: {
+                           card_selector_target: 'cardSelectionRadio',
+                           action: 'change->checkout#setPaymentMethod',
+                         }
+      %>
+      <%= label_tag "card_#{card.id}", "**** **** **** #{card.last4} (#{card.brand})" %>
+      <span class="card-expiry">Expires on <%= card.exp_month %>/<%= card.exp_year %></span>
+      <% if card.expired? %>
+        <span class="card-status">Expired</span>
+      <% end %>
+    </div>
+  <% end %>
+  <%= form.submit 'Use this card', class: 'btn btn-primary' %>
+<% end %>
+<%=
+  link_to 'Add a new card',
+          new_user_card_path(current_user),
+          class: 'add-new-card',
+          remote: true,
+          data: {
+            toggle: 'modal',
+            target: '#cardModal',
+          }
+%>

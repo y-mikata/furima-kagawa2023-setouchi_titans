@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   before_action :set_user
-  layout 'user'
+
   def index
     @cards = current_user.cards
   end
@@ -55,9 +55,15 @@ class CardsController < ApplicationController
       customer_card = customer.cards.retrieve(card.card_id)
       customer_card.delete if customer_card.present?
       card.destroy
+      customer = Payjp::Customer.retrieve(current_user.payjp_customer_id)
+      new_default_card = customer.default_card
+      if new_default_card != card.card_id
+        new_default_card = current_user.cards.find_by(card_id: new_default_card)
+        new_default_card&.update(is_default: true)
+      end
       flash[:notice] = 'Card successfully deleted.'
       redirect_to user_cards_path(current_user)
-    rescue Payjp::Error => e
+    rescue Payjp::CardError => e
       flash[:alert] = "Failed to delete card: #{e.message}"
       redirect_to user_cards_path(current_user)
     end

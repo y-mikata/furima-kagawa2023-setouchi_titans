@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :likes, :items, :orders]
   before_action :authenticate_user!
   before_action :contributor_confirmation
-  layout 'user'
+
   def show
   end
 

@@ -1,6 +1,6 @@
 const pay = () => {
   const currentPath = window.location.pathname;
-  const cardPageFormat = /\/items\/\d+\/orders$|\/users\/\d+\/cards\/new/;
+  const cardPageFormat = /\/users\/\d+\/cards\/new/;
   if (!cardPageFormat.test(currentPath)) return;
 
   const publicKey = gon.public_key;
