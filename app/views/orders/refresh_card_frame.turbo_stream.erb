@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "card_frame" do %>
+  <%= turbo_frame_tag "card_frame" do %>
+    <%= render 'selected_card', selected_card: @selected_card %>
+  <% end %>
+<% end %>

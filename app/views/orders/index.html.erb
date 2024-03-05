@@ -29,28 +29,19 @@
 
       <%= include_gon %>
 
-      <div data-controller="checkout" data-checkout-set-payment-method-url-value="/set_payment_method" >
       <div class="payment-method">
         <h2>Payment method</h2>
         <% if @cards.present? %>
-          <div id="selected-card-container" data-checkout-target="selectedCardDisplay">
-            <%= render 'selected_card', selected_card: @selected_card %>
-          </div>
-          <%= link_to 'Change', '#', class: 'change-card', data: { checkout_target: "changeCardLink", action: "click->checkout#openCardList" } %>
-          <div id="card-list-container" style="display: none;" data-checkout-target="cardListContainer">
-            <%= render 'card_list', cards: @cards, selected_card: @selected_card %>
-          </div>
+        <div data-controller="checkout" data-checkout-set-card-url-value="<%= set_card_item_orders_path(item_id: @item.id) %>" data-checkout-clear-session-url-value="<%= clear_session_item_orders_path(item_id: @item.id) %>" data-checkout-refresh-card-frame-url-value="<%= refresh_card_frame_item_orders_path(item_id: @item.id) %>" >
+          <%= turbo_frame_tag "card_frame" do %>
+            <% if @show_card_list %>
+              <%= render 'card_list', locals: { cards: @cards, selected_card: @selected_card } %>
+            <% else %>
+              <%= render 'selected_card', selected_card: @selected_card %>
+            <% end %>
+          <% end %>
         <% else %>
-          <%=
-            link_to 'Add a new card',
-                    new_user_card_path(current_user),
-                    class: 'add-new-card',
-                    remote: true,
-                    data: {
-                      toggle: 'modal',
-                      target: '#cardModal',
-                    }
-          %>
+            <%= link_to 'New Card', new_user_card_path(current_user, context: 'orders_top'), class: 'btn btn-primary', data: { turbo_frame: 'modal' } %>
         <% end %>
       </div>
       </div>

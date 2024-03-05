@@ -1,22 +1,24 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["changeCardLink", "selectedCardDisplay", "cardListContainer"];
-  static values = { setPaymentMethodUrl: String };
+  static targets = ["selectedCard"];
+  static values = { setCardUrl: String, clearSessionUrl: String, refreshCardFrameUrl: String };
 
   connect() {
-    this.updateSelectedCardDisplay();
+    this.refreshSelectedCardDisplay();
     window.addEventListener("pageshow", this.handlePageShow.bind(this));
     window.addEventListener("pagehide", this.handlePageHide.bind(this));
   }
 
   disconnect() {
     this.clearSession();
+    window.removeEventListener("pageshow", this.handlePageShow.bind(this));
+    window.removeEventListener("pagehide", this.handlePageHide.bind(this));
   }
 
   handlePageShow(event) {
     if (event.persisted) {
-      this.updateSelectedCardDisplay();
+      this.refreshSelectedCardDisplay();
     }
   }
 
@@ -26,24 +28,20 @@ export default class extends Controller {
     }
   }
 
-  updateSelectedCardDisplay() {
-    fetch("/selected_card_display")
+  refreshSelectedCardDisplay() {
+    fetch(this.refreshCardFrameUrlValue)
       .then((response) => response.text())
       .then((html) => {
-        this.selectedCardDisplayTarget.innerHTML = html;
-
-        if (sessionStorage.getItem("updated") !== "true") {
-          sessionStorage.setItem("updated", "true"); // Set the flag in session storage
-          window.location.reload();
-        } else {
-          sessionStorage.removeItem("updated"); // Remove the flag to allow future updates
+        const turboFrame = document.getElementById("card_frame");
+        if (turboFrame) {
+          turboFrame.innerHTML = html;
         }
       })
       .catch((error) => console.error("Could not update selected card display:", error));
   }
 
   clearSession() {
-    fetch("/clear_session", {
+    fetch(this.clearSessionUrlValue, {
       method: "POST",
       headers: {
         "X-CSRF-Token": this.getCSRFToken(),
@@ -61,23 +59,10 @@ export default class extends Controller {
       });
   }
 
-  openCardList(event) {
-    event.preventDefault();
-    this.selectedCardDisplayTarget.style.display = "none";
-    this.changeCardLinkTarget.style.display = "none";
-    this.cardListContainerTarget.style.display = "block";
-  }
-
-  closeCardList() {
-    this.selectedCardDisplayTarget.style.display = "block";
-    this.changeCardLinkTarget.style.display = "block";
-    this.cardListContainerTarget.style.display = "none";
-  }
-
   setPaymentMethod(event) {
     const cardId = event.target.value;
 
-    fetch(this.setPaymentMethodUrlValue, {
+    fetch(this.setCardUrlValue, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

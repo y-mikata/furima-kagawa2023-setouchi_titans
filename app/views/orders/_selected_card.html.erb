@@ -1,5 +1,13 @@
-<p>
-  <%= "**** **** **** #{selected_card.last4} (#{selected_card.brand})" %>
+<p data-checkout-target="selectedCard">
+  <%= "**** **** **** #{@selected_card.last4} (#{@selected_card.brand})" %>
   <br />
-  Expires on <%= selected_card.exp_month %>/<%= selected_card.exp_year %>
+  Expires on <%= @selected_card.exp_month %>/<%= @selected_card.exp_year %>
 </p>
+<%=
+  button_to 'Change',
+            toggle_card_list_item_orders_path(show_card_list: !@show_card_list),
+            method: :post,
+            data: {
+              turbo_frame: 'card_frame',
+            }
+%>

@@ -2,6 +2,5 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import "calc";
-import "card";
 import "preview";
 import "gallery";

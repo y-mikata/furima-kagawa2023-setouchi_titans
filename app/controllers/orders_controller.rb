@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
-  before_action :set_cards, only: [:index, :create]
-  before_action :set_selected_card, only: [:index, :create, :set_payment_method, :selected_card_display]
+  before_action :set_cards, only: [:index, :create, :toggle_card_list, :refresh_card_frame]
+  before_action :set_selected_card, only: [:index, :create, :set_card, :toggle_card_list, :refresh_card_frame]
   before_action :set_user, only: [:index, :create]
   before_action :authenticate_user!, only: :index
   before_action :check_if_sold, only: :index
@@ -26,16 +26,19 @@ class OrdersController < ApplicationController
     end
   end
 
-  def set_payment_method
+  def set_card
     session[:selected_card_id] = params[:selected_card_id]
     render json: { message: 'Payment method set successfully.' }
   end
 
-  def selected_card_display
-    render partial: 'selected_card', locals: { selected_card: @selected_card }
-    return unless @selected_card.nil?
+  def toggle_card_list
+    @show_card_list = ActiveModel::Type::Boolean.new.cast(params[:show_card_list])
 
-    @selected_card = @default_card
+    respond_to(&:turbo_stream)
+  end
+
+  def refresh_card_frame
+    respond_to(&:turbo_stream)
   end
 
   def clear_session

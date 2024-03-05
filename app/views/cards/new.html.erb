@@ -1,16 +1,9 @@
-<%= stylesheet_link_tag 'base', media: 'all', 'data-turbolinks-track': 'reload' %>
-<%= stylesheet_link_tag 'mdc-common', media: 'all', 'data-turbolinks-track': 'reload' %>
-<%= stylesheet_link_tag 'mdc-on-v2', media: 'all', 'data-turbolinks-track': 'reload' %>
-
-<%= include_gon %>
-
 <% content_for :sidebar do %>
   <%= render 'shared/sidebar' %>
 <% end %>
 
 <div class="content">
   <section class="mdc" id="v2-mdc">
-    <h1>カード登録</h1>
     <%= render 'card_form' %>
   </section>
 </div>

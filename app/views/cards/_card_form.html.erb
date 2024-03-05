@@ -1,27 +1,30 @@
-<%= form_with  url: user_cards_path, id: 'charge-form', class: 'card-form',local: true do |f| %>
-  <div class="row">
-    <div class="field text-field">
-      <div id="number-form" class="text-field__input"></div>
-      <span class="text-field__ripple"></span>
-      <span class="floating-label">カード番号</span>
-      <span class="line-ripple"></span>
+<%= render "shared/modal" do %>
+  <h1>カード登録</h1>
+  <%= form_with url: user_cards_path, id: 'charge-form', class: 'card-form', data: { controller: "card", "card-target": "form"} do |f| %>
+    <div class="row">
+      <label class="field text-field" for="number-form">
+        <div id="number-form" class="text-field__input" data-card-target="number"></div>
+        <span class="text-field__ripple"></span>
+        <span class="floating-label">カード番号</span>
+        <span class="line-ripple"></span>
+      </label>
     </div>
-  </div>
-  <div class="row">
-    <div class="field text-field">
-      <div id="expiry-form" class="text-field__input"></div>
-      <span class="text-field__ripple"></span>
-      <span class="floating-label">有効期限</span>
-      <span class="line-ripple"></span>
+    <div class="row">
+      <label class="field text-field" for="expiry-form">
+        <div id="expiry-form" class="text-field__input" data-card-target="expiry"></div>
+        <span class="text-field__ripple"></span>
+        <span class="floating-label">有効期限</span>
+        <span class="line-ripple"></span>
+      </label>
+      <label class="field text-field" for="cvc-form">
+        <div id="cvc-form" class="text-field__input" data-card-target="cvc"></div>
+        <span class="text-field__ripple"></span>
+        <span class="floating-label">CVC</span>
+        <span class="line-ripple"></span>
+      </label>
     </div>
-    <div class="field text-field">
-      <div id="cvc-form" class="text-field__input"></div>
-      <span class="text-field__ripple"></span>
-      <span class="floating-label">CVC</span>
-      <span class="line-ripple"></span>
+    <div class="row">
+      <%= f.button '登録する', class: 'field mdc-button mdc-button--raised', id: 'new-card-button' %>
     </div>
-  </div>
-  <div class="row">
-    <%= f.submit '登録する', class: 'field mdc-button mdc-button--raised', id: 'new-card-button' %>
-  </div>
+  <% end %>
 <% end %>

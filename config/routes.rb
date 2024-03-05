@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
   get 'cards/new'
   get 'users/show'
-  get '/selected_card_display', to: 'orders#selected_card_display'
-  post '/set_payment_method', to: 'orders#set_payment_method'
-  post '/clear_session', to: 'orders#clear_session'
   devise_for :users
   root to: "items#index"
   resources :items do
-    resources :orders, only: [:index, :create]
+    resources :orders, only: [:index, :create] do
+      collection do
+        get 'refresh_card_frame'
+        post 'toggle_card_list'
+        post 'set_card'
+        post 'clear_session'
+      end
+    end
   end
   resources :users, only: :show do
     resources :cards, only: [:index, :new, :create, :destroy] do

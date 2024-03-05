@@ -9,39 +9,29 @@ class CardsController < ApplicationController
   end
 
   def create
-    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    result = Cards::CreateService.new(user: current_user, token: params[:token]).call
 
-    if params[:token].blank?
-      redirect_to new_user_card_path(current_user), alert: 'No card token provided. Please try again.'
-      return
-    end
+    if result.success?
+      @card = result.card
+      respond_to do |format|
+        format.turbo_stream do
+          if URI(request.referrer).path.include?('orders')
+            render turbo_stream: turbo_stream.append('cards-container', partial: 'orders/card',
+                                                                        locals: { cards: @cards, selected_card: @selected_card })
+          else
+            render turbo_stream: [
+              turbo_stream.update('flash', partial: 'shared/flash_messages', locals: { notice: 'Card added' }),
+              turbo_stream.append('cards-list', partial: 'cards/card', locals: { card: @card })
+            ]
+          end
+        end
 
-    if current_user.payjp_customer_id
-      customer = Payjp::Customer.retrieve(current_user.payjp_customer_id)
-      payjp_card = customer.cards.create(card: params[:token])
+        format.html do
+          redirect_to user_cards_path(current_user), notice: 'Card successfully added.'
+        end
+      end
     else
-      customer = Payjp::Customer.create(
-        email: current_user.email,
-        description: "Customer association for user_id #{current_user.id}",
-        card: params[:token]
-      )
-      current_user.update_column(:payjp_customer_id, customer.id)
-      payjp_card = customer.cards.data.first
-    end
-
-    card = current_user.cards.build(
-      token: params[:token],
-      card_id: payjp_card.id,
-      brand: payjp_card.brand,
-      last4: payjp_card.last4,
-      exp_month: payjp_card.exp_month, exp_year: payjp_card.exp_year,
-      is_default: payjp_card.id == customer.default_card
-    )
-
-    if card.save
-      redirect_to user_cards_path(current_user), notice: 'Card successfully added.'
-    else
-      redirect_to new_user_card_path(current_user), alert: 'Unable to add card.'
+      render :new, status: :unprocessable_entity
     end
   end
 
