@@ -1,5 +1,16 @@
 <%= turbo_stream.replace "card_frame" do %>
   <%= turbo_frame_tag "card_frame" do %>
-    <%= render 'selected_card', selected_card: @selected_card %>
+    <% if @cards.present? %>
+      <%= turbo_frame_tag "selected-card" do %>
+        <%= render 'selected_card', selected_card: @selected_card %>
+      <% end %>
+    <% else %>
+      <%= turbo_frame_tag "selected-card" do %>
+        <%= link_to fa_icon('plus 2x', text: 'Add New Card'),
+                        new_user_card_path(current_user, context: 'orders_top'),
+                        class: 'inline-flex items-center w-full max-w-lg p-5 text-2xl font-semibold text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer justify-evenly dark:hover:text-gray-300 dark:border-gray-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700',
+                        data: { turbo_frame: 'modal'} %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

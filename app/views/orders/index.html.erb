@@ -30,21 +30,28 @@
       <%= include_gon %>
 
       <div class="payment-method">
-        <h2>Payment method</h2>
-        <% if @cards.present? %>
+        <h2 class="p-5 font-bold text-center">Payment method</h2>
         <div data-controller="checkout" data-checkout-set-card-url-value="<%= set_card_item_orders_path(item_id: @item.id) %>" data-checkout-clear-session-url-value="<%= clear_session_item_orders_path(item_id: @item.id) %>" data-checkout-refresh-card-frame-url-value="<%= refresh_card_frame_item_orders_path(item_id: @item.id) %>" >
           <%= turbo_frame_tag "card_frame" do %>
-            <% if @show_card_list %>
-              <%= render 'card_list', locals: { cards: @cards, selected_card: @selected_card } %>
-            <% else %>
-              <%= render 'selected_card', selected_card: @selected_card %>
+            <% if @cards.present? %>
+              <% if @show_card_list %>
+                <%= render 'card_list', locals: { cards: @cards, selected_card: @selected_card } %>
+              <% else %>
+                <%= turbo_frame_tag "selected-card" do %>
+                  <%= render 'selected_card', selected_card: @selected_card %>
+                <% end %>
+            <% end %>
+          <% else %>
+            <%= turbo_frame_tag "selected-card" do %>
+            <%= link_to fa_icon('plus 2x', text: 'Add New Card'),
+                        new_user_card_path(current_user, context: 'orders_top'),
+                        class: 'inline-flex items-center w-full max-w-lg p-5 text-2xl font-semibold text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer justify-evenly dark:hover:text-gray-300 dark:border-gray-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700',
+                        data: { turbo_frame: 'modal'} %>
             <% end %>
           <% end %>
-        <% else %>
-            <%= link_to 'New Card', new_user_card_path(current_user, context: 'orders_top'), class: 'btn btn-primary', data: { turbo_frame: 'modal' } %>
         <% end %>
       </div>
-      </div>
+    </div>
 
       <%= form_with model: @order_address, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
         <%= render 'shared/error_messages', model: @order_address %>

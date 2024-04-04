@@ -49,6 +49,12 @@ module Cards
     end
 
     def build_card(payjp_card, customer)
+      is_first_card = @user.cards.empty?
+      if is_first_card
+        customer.default_card = payjp_card.id
+        customer.save
+      end
+
       @user.cards.build(
         token: @token,
         card_id: payjp_card.id,
@@ -56,7 +62,7 @@ module Cards
         last4: payjp_card.last4,
         exp_month: payjp_card.exp_month,
         exp_year: payjp_card.exp_year,
-        is_default: payjp_card.id == customer.default_card
+        is_default: is_first_card
       )
     end
   end

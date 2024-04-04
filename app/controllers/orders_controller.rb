@@ -1,9 +1,9 @@
 class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
+  before_action :authenticate_user!
+  before_action :set_user, only: [:index, :create]
   before_action :set_cards, only: [:index, :create, :toggle_card_list, :refresh_card_frame]
   before_action :set_selected_card, only: [:index, :create, :set_card, :toggle_card_list, :refresh_card_frame]
-  before_action :set_user, only: [:index, :create]
-  before_action :authenticate_user!, only: :index
   before_action :check_if_sold, only: :index
   before_action :contributor_check, only: :index
 
@@ -65,11 +65,8 @@ class OrdersController < ApplicationController
   end
 
   def set_selected_card
-    @selected_card = if session[:selected_card_id]
-                       current_user.cards.find_by(id: session[:selected_card_id])
-                     else
+    @selected_card =   current_user.cards.find_by(id: session[:selected_card_id]) ||
                        current_user.cards.find_by(is_default: true)
-                     end
   end
 
   def set_user

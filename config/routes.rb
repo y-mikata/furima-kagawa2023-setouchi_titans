@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   get 'users/show'
   devise_for :users
   root to: "items#index"
+  post 'toggle_card_list', to: 'orders#toggle_card_list'
   resources :items do
     resources :orders, only: [:index, :create] do
       collection do
         get 'refresh_card_frame'
-        post 'toggle_card_list'
         post 'set_card'
         post 'clear_session'
       end

@@ -1,39 +1,47 @@
-<%= form_with url: '#', id: 'card-selection-form', method: :patch, local: true, html: { autocomplete: "off" }, data: { action: "submit->checkout#closeCardList" } do |form| %>
-  <div id="cards-container">
-    <% @cards.each do |card| %>
-      <div class="card-item <%= 'expired' if card.expired? %>">
-        <%=
-          radio_button_tag 'selected_card_id',
-                           card.id,
-                           card == @selected_card,
-                           class: 'card-selection-radio',
-                           data: {
-                             card_selector_target: 'cardSelectionRadio',
-                             action: 'change->checkout#setPaymentMethod',
-                           }
-        %>
-        <%= label_tag "card_#{card.id}", "**** **** **** #{card.last4} (#{card.brand})" %>
-        <span class="card-expiry">Expires on <%= card.exp_month %>/<%= card.exp_year %></span>
-        <% if card.expired? %>
-          <span class="card-status">Expired</span>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-<%=
-  link_to 'New Card',
-          new_user_card_path(current_user, from: 'orders'),
-          class: 'btn btn-primary',
-          data: {
-            turbo_frame: 'modal',
-          }
-%>
-<%=
-  button_to 'Confirm',
-            toggle_card_list_item_orders_path(show_card_list: !@show_card_list),
-            method: :post,
+<div class="text-center">
+  <%= form_with url: '#', id: 'card-selection-form', method: :patch, local: true, html: { autocomplete: "off" }, data: { action: "submit->checkout#closeCardList" } do |form| %>
+    <ul id="cards-container" class="grid w-full gap-3">
+      <% @cards.each do |card| %>
+        <li class="<%= 'expired' if card.expired? %>">
+          <%=
+            radio_button_tag 'card',
+                             card.id,
+                             card == @selected_card,
+                             class: 'hidden peer',
+                             data: {
+                               card_selector_target: 'cardSelectionRadio',
+                               action: 'change->checkout#setPaymentMethod',
+                             }
+          %>
+          <%= label_tag "card_#{card.id}",
+          class: "inline-flex items-center w-full max-w-lg p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer justify-evenly dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" do %>
+            <%= fa_icon "cc-#{card.brand.downcase} 3x" %>
+            <div class="block">
+              <div class="w-full text-lg font-semibold"><%= "**** **** **** #{card.last4}" %></div>
+              <div class="w-full">Expires on <%= card.exp_month %>/<%= card.exp_year %></div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%=
+    link_to fa_icon('plus 2x', text: 'Add New Card'),
+            new_user_card_path(current_user, context: 'orders_card_list'),
+            class:
+              'inline-flex items-center w-full max-w-lg p-5 mt-3 text-2xl font-semibold text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer justify-evenly dark:hover:text-gray-300 dark:border-gray-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700',
             data: {
-              turbo_frame: 'card_frame',
+              turbo_frame: 'modal',
             }
-%>
+  %>
+  <%=
+    button_to 'Confirm',
+              toggle_card_list_path(show_card_list: !@show_card_list),
+              method: :post,
+              class:
+                'inline-flex items-center justify-center w-full max-w-sm p-3 mt-3 text-lg font-semibold text-white bg-blue-500 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-700 focus:ring-4 focus:ring-blue-300',
+              data: {
+                turbo_frame: 'card_frame',
+              }
+  %>
+</div>

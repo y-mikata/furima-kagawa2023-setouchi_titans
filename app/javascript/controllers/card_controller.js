@@ -23,11 +23,12 @@ export default class extends Controller {
     var elementStyle = {
       base: {
         fontFamily: "'Noto Sans Japanese', sans-serif",
+        fontSize: "18px",
         "::placeholder": {
           color: "rgba(0, 0, 0, 0.54)",
         },
         caretColor: "#198FCC",
-        lineHeight: "28px",
+        lineHeight: "36px",
       },
       invalid: {
         color: "rgba(0, 0, 0, 0.87)",

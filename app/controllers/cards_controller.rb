@@ -15,8 +15,12 @@ class CardsController < ApplicationController
       @card = result.card
       respond_to do |format|
         format.turbo_stream do
-          if URI(request.referrer).path.include?('orders')
-            render turbo_stream: turbo_stream.append('cards-container', partial: 'orders/card',
+          if params[:context] == 'orders_top'
+            @selected_card = @card
+            render turbo_stream: turbo_stream.update('selected-card', partial: 'orders/selected_card',
+                                                                      locals: { selected_card: @selected_card })
+          elsif params[:context] == 'orders_card_list'
+            render turbo_stream: turbo_stream.append('cards-container', partial: 'orders/new_card',
                                                                         locals: { cards: @cards, selected_card: @selected_card })
           else
             render turbo_stream: [
