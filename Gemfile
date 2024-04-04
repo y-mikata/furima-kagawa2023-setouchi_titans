@@ -92,6 +92,7 @@ gem 'image_processing', '~> 1.2'
 gem 'gon'
 gem 'payjp'
 gem "tailwindcss-rails", "~> 2.3"
+gem "font-awesome-rails"
 gem "aws-sdk-s3", require: false
 
 group :production do

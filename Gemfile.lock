@@ -150,6 +150,8 @@ GEM
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
+    font-awesome-rails (4.7.0.8)
+      railties (>= 3.2, < 8.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     gon (6.4.0)
@@ -424,6 +426,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  font-awesome-rails
   gon
   image_processing (~> 1.2)
   importmap-rails
