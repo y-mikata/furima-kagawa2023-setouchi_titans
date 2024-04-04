@@ -3,6 +3,7 @@ import { enter, leave } from "el-transition";
 
 export default class extends Controller {
   static targets = ["wrapper", "body"];
+
   connect() {
     enter(this.wrapperTarget);
     enter(this.bodyTarget);
