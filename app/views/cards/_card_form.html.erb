@@ -1,30 +1,32 @@
 <%= render "shared/modal" do %>
-  <h1>カード登録</h1>
-  <%= form_with url: user_cards_path, id: 'charge-form', class: 'card-form', data: { controller: "card", "card-target": "form"} do |f| %>
-    <div class="row">
-      <label class="field text-field" for="number-form">
-        <div id="number-form" class="text-field__input" data-card-target="number"></div>
-        <span class="text-field__ripple"></span>
-        <span class="floating-label">カード番号</span>
-        <span class="line-ripple"></span>
-      </label>
+  <h1 class="text-2xl font-bold text-center">カード登録</h1>
+  <%= form_with url: user_cards_path, id: 'charge-form', class: 'card-form', data: { controller: "card", "card-context-value" => @context, "card-target": "form"} do |f| %>
+    <div class="relative mt-4">
+      <label for="number-form" class="text-xs">カード番号</label>
+      <div
+        id="number-form"
+        class="pl-2 mb-3 border border-gray-300 border-solid rounded"
+        data-card-target="number"
+      ></div>
     </div>
-    <div class="row">
-      <label class="field text-field" for="expiry-form">
-        <div id="expiry-form" class="text-field__input" data-card-target="expiry"></div>
-        <span class="text-field__ripple"></span>
-        <span class="floating-label">有効期限</span>
-        <span class="line-ripple"></span>
-      </label>
-      <label class="field text-field" for="cvc-form">
-        <div id="cvc-form" class="text-field__input" data-card-target="cvc"></div>
-        <span class="text-field__ripple"></span>
-        <span class="floating-label">CVC</span>
-        <span class="line-ripple"></span>
-      </label>
+    <div class="flex justify-between mb-3">
+      <div class="w-full mr-2.5">
+        <label for="expiry-form" class="text-xs">有効期限</label>
+        <div id="expiry-form" class="pl-2 border border-gray-300 border-solid rounded" data-card-target="expiry"></div>
+      </div>
+      <div class="w-full ml-2.5">
+        <label for="cvc-form" class="text-xs">CVC</label>
+        <div id="cvc-form" class="pl-2 border border-gray-300 border-solid rounded" data-card-target="cvc"></div>
+      </div>
     </div>
-    <div class="row">
-      <%= f.button '登録する', class: 'field mdc-button mdc-button--raised', id: 'new-card-button' %>
+    <%= hidden_field_tag :context, params[:context] %>
+    <div class="flex justify-center">
+      <%=
+        f.submit '登録する',
+                 class:
+                   'w-full p-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2',
+                 id: 'new-card-button'
+      %>
     </div>
   <% end %>
 <% end %>
