@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :existence_check
   before_action :set_user, only: [:show, :likes, :items, :orders]
   before_action :authenticate_user!
   before_action :contributor_confirmation
@@ -19,6 +20,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def existence_check
+    redirect_to root_path if @user.nil?
   end
 
   def contributor_confirmation

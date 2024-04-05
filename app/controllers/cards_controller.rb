@@ -1,5 +1,8 @@
 class CardsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :existence_check
   before_action :set_user
+  before_action :contributor_confirmation
 
   def index
     @cards = current_user.cards
@@ -92,5 +95,13 @@ class CardsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def existence_check
+    redirect_to root_path if @user.nil?
+  end
+
+  def contributor_confirmation
+    redirect_to root_path unless current_user == @user
   end
 end

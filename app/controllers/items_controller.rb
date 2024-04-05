@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :existence_check, except: [:index]
   before_action :set_item, except: [:index, :new, :create]
   before_action :authenticate_user!, only: [:new, :edit]
   before_action :contributor_confirmation, only: [:edit, :update]
@@ -64,6 +65,10 @@ class ItemsController < ApplicationController
 
   def contributor_confirmation
     redirect_to root_path unless current_user == @item.user
+  end
+
+  def existence_check
+    redirect_to root_path if @item.nil?
   end
 
   def check_if_sold

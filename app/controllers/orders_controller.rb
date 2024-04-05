@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :existence_check
   before_action :set_item, only: [:index, :create]
   before_action :authenticate_user!
   before_action :set_user, only: [:index, :create]
@@ -93,6 +94,10 @@ class OrdersController < ApplicationController
 
   def check_if_sold
     redirect_to root_path if @item.order.present?
+  end
+
+  def existence_check
+    redirect_to root_path if @item.nil?
   end
 
   def contributor_check

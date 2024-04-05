@@ -1,6 +1,6 @@
 <div class="mb-3">
   <div
-    class="relative inline-flex items-center justify-between w-full max-w-lg p-5 text-gray-500 bg-white border <%= card.is_default ? ' border-green-500' : ' border-gray-200' %> rounded-lg dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+    class="relative inline-flex items-center justify-between w-full max-w-xl p-5 text-gray-500 bg-white border <%= card.is_default ? ' border-green-500' : ' border-gray-200' %> rounded-lg dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
   >
     <%= fa_icon "cc-#{card.brand.downcase} 3x", class: 'w-1/4' %>
     <div class="block w-2/4">
@@ -14,7 +14,7 @@
       <div class="w-full text-lg font-semibold"><%= "**** **** **** #{card.last4}" %></div>
       <div class="w-full">Expires on <%= card.exp_month %>/<%= card.exp_year %></div>
     </div>
-    <div class="flex items-center w-1/4 justify-evenly">
+    <div class="flex items-center justify-end w-1/4">
       <% unless card.is_default %>
         <%=
               button_to set_default_user_card_path(current_user, card),
@@ -30,7 +30,7 @@
                       data: {
                         confirm: 'Are you sure?',
                       },
-                      class: 'p-1 text-xs text-white bg-red-700 border border-red-700 rounded' do
+                      class: 'p-1 ml-1 text-xs text-white bg-red-700 border border-red-700 rounded' do
           %>
         Delete <br />
         Card
