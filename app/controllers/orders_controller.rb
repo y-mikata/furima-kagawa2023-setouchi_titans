@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :existence_check
-  before_action :set_item, only: [:index, :create]
   before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
+  before_action :item_existence_check, only: [:index, :create]
   before_action :set_user, only: [:index, :create]
   before_action :set_cards, only: [:index, :create, :toggle_card_list, :refresh_card_frame]
   before_action :set_selected_card, only: [:index, :create, :set_card, :toggle_card_list, :refresh_card_frame]
@@ -56,7 +56,7 @@ class OrdersController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:item_id])
+    @item = Item.find_by(id: params[:item_id])
   end
 
   def set_cards
@@ -96,7 +96,7 @@ class OrdersController < ApplicationController
     redirect_to root_path if @item.order.present?
   end
 
-  def existence_check
+  def item_existence_check
     redirect_to root_path if @item.nil?
   end
 

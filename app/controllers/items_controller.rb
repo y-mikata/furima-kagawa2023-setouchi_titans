@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :existence_check, except: [:index]
-  before_action :set_item, except: [:index, :new, :create]
   before_action :authenticate_user!, only: [:new, :edit]
+  before_action :set_item, except: [:index, :new, :create]
+  before_action :existence_check, except: [:index, :new, :create]
   before_action :contributor_confirmation, only: [:edit, :update]
   before_action :check_if_sold, only: [:edit, :update]
 
@@ -60,7 +60,7 @@ class ItemsController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = Item.find_by(id: params[:id])
   end
 
   def contributor_confirmation

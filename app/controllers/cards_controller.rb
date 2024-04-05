@@ -1,7 +1,7 @@
 class CardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :existence_check
   before_action :set_user
+  before_action :user_existence_check
   before_action :contributor_confirmation
 
   def index
@@ -94,10 +94,10 @@ class CardsController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id])
   end
 
-  def existence_check
+  def user_existence_check
     redirect_to root_path if @user.nil?
   end
 
