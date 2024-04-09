@@ -30,3 +30,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 .Ds_Store
+
+# Ignore environment file
+.env
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

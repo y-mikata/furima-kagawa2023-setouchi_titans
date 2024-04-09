@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script type="text/javascript" src="https://js.pay.jp/v2/pay.js"></script>
     <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
@@ -14,7 +20,7 @@
     <%= render 'shared/header' %>
     <div class="mypage">
       <div class="sidebar">
-        <%= render 'sidebar' %>
+        <%= render 'shared/sidebar' %>
       </div>
       <div class="content">
         <%= yield %>

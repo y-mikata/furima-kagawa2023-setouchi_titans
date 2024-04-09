@@ -2,15 +2,36 @@
 <html>
   <head>
     <title>FurimaKagawa2023SetouchiTitans</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <script type="text/javascript" src="https://js.pay.jp/v2/pay.js"></script>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
+    <!-- Pay.jp script -->
+    <script src="https://js.pay.jp/v2/pay.js"></script>
+    <!-- end: Pay.jp script -->
   </head>
 
   <body>
-    <%= yield %>
+    <%= turbo_frame_tag 'modal' %>
+    <%= turbo_frame_tag "flash" do %>
+      <%= render 'shared/flash_messages' %>
+    <% end %>
+    <% if content_for?(:header) %>
+      <%= yield :header %>
+    <% else %>
+      <%= render 'shared/header' %>
+    <% end %>
+    <% if content_for?(:sidebar) %>
+      <div class="mypage">
+        <div class="sidebar">
+          <%= yield :sidebar %>
+        </div>
+        <%= yield %>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

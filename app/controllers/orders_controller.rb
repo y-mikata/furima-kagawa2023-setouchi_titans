@@ -1,12 +1,18 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
-  before_action :authenticate_user!, only: :index
+  before_action :item_existence_check, only: [:index, :create]
+  before_action :set_user, only: [:index, :create]
+  before_action :set_cards, only: [:index, :create, :toggle_card_list, :refresh_card_frame]
+  before_action :set_selected_card, only: [:index, :create, :set_card, :toggle_card_list, :refresh_card_frame]
   before_action :check_if_sold, only: :index
   before_action :contributor_check, only: :index
 
   def index
-    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_address = OrderAddress.new
+    return if session[:selected_card_id]
+
+    session[:selected_card_id] = @default_card&.id
   end
 
   def create
@@ -14,36 +20,84 @@ class OrdersController < ApplicationController
     if @order_address.valid?
       pay_item
       @order_address.save
+      session.delete(:selected_card_id)
       redirect_to root_path
     else
-      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render 'index', status: :unprocessable_entity
     end
+  end
+
+  def set_card
+    session[:selected_card_id] = params[:selected_card_id]
+    render json: { message: 'Payment method set successfully.' }
+  end
+
+  def toggle_card_list
+    @show_card_list = ActiveModel::Type::Boolean.new.cast(params[:show_card_list])
+
+    respond_to(&:turbo_stream)
+  end
+
+  def refresh_card_frame
+    respond_to(&:turbo_stream)
+  end
+
+  def clear_session
+    session.delete(:selected_card_id)
+    head :ok
   end
 
   private
 
   def order_params
     params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :block, :building, :phone_number).merge(
-      item_id: params[:item_id], user_id: current_user.id, token: params[:token]
+      item_id: params[:item_id], user_id: current_user.id, card_id: @selected_card
     )
   end
 
   def set_item
-    @item = Item.find(params[:item_id])
+    @item = Item.find_by(id: params[:item_id])
+  end
+
+  def set_cards
+    @cards = current_user.cards
+    @default_card = current_user.cards.find_by(is_default: true)
+    gon.default_card = @default_card
+  end
+
+  def set_selected_card
+    @selected_card =   current_user.cards.find_by(id: session[:selected_card_id]) ||
+                       current_user.cards.find_by(is_default: true)
+  end
+
+  def set_user
+    @user = current_user
   end
 
   def pay_item
-    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-    Payjp::Charge.create(
-      amount: Item.find(order_params[:item_id]).price, # 商品の値段
-      card: order_params[:token], # カードトークン
-      currency: 'jpy' # 通貨の種類（日本円）
-    )
+    @item.with_lock do
+      Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+      payjp_customer = Payjp::Customer.retrieve(current_user.payjp_customer_id)
+      selected_card_id = @selected_card
+      card = current_user.cards.find_by(id: selected_card_id)
+
+      if card.present?
+        Payjp::Charge.create(
+          amount: @item.price, # 商品の値段
+          customer: payjp_customer, # カードトークン
+          card: card.card_id,
+          currency: 'jpy' # 通貨の種類（日本円）
+        )
+      end
+    end
   end
 
   def check_if_sold
     redirect_to root_path if @item.order.present?
+  end
+
+  def item_existence_check
+    redirect_to root_path if @item.nil?
   end
 
   def contributor_check

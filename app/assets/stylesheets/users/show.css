@@ -95,11 +95,9 @@
     flex-direction: column;
   }
 
-  /* Adjust breakpoint as needed */
   .sidebar {
     flex-basis: 100%;
     order: 2;
-    /* Puts the sidebar below the content area */
     margin-right: 0;
   }
 

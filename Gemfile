@@ -56,12 +56,15 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
+  gem 'dotenv-rails'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem 'rubocop', require: false
+  gem 'solargraph'
+  gem 'solargraph-rails'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -88,6 +91,8 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'gon'
 gem 'payjp'
+gem "tailwindcss-rails", "~> 2.3"
+gem "font-awesome-rails"
 gem "aws-sdk-s3", require: false
 
 group :production do
