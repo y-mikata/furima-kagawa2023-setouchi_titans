@@ -8,7 +8,6 @@
       <div class="w-full text-lg font-semibold"><%= "**** **** **** #{@selected_card.last4}" %></div>
       <div class="w-full">Expires on <%= @selected_card.exp_month %>/<%= @selected_card.exp_year %></div>
     </div>
-    <br />
   </div>
   <%=
     button_to fa_icon('refresh 2x', text: 'Change Card', class: 'pr-4'),
