@@ -5,5 +5,4 @@ import "calc";
 import "preview";
 import "gallery";
 import "el-transition";
-import "./initialize-payjp";
-import "/assets/initialize-payjp";
+import "initialize-payjp";
