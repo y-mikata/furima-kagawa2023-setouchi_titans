@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { getPayjpInstance } from "initialize-payjp";
+import { getPayjpInstance } from "../initialize-payjp";
 
 export default class extends Controller {
   static targets = ["form", "number", "expiry", "cvc", "error", "token"];
