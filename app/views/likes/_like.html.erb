@@ -1,0 +1,17 @@
+<% if current_user.likes.find_by(item_id: item.id) %>
+  <%= button_to unlike_item_path(@item),
+          method: :delete,
+          class: "inline-flex justify-center border-2 border-solid w-[15vw] min-w-[200px] items-center border-[#ffb340] rounded-full py-2" do %>
+    <%= fa_icon 'star', class: 'pr-[5px] text-yellow-400' %>
+    <div class="text-[#F94B00]">いいね！</div>
+    <div class="text-[#F94B00] w-2"><%= @item.likes.count %></div>
+  <% end %>
+<% else %>
+  <%= button_to like_item_path(@item),
+        method: :post,
+        class: "inline-flex justify-center border-2 border-solid w-[15vw] min-w-[200px] items-center border-black rounded-full py-2" do %>
+    <%= fa_icon 'star', class: 'pr-[5px]' %>
+    <div>いいね！</div>
+    <div class="w-2"><%= @item.likes.count %></div>
+  <% end %>
+<% end %>
