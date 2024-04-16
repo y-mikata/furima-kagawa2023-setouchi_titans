@@ -2,4 +2,38 @@
   <%= render 'shared/sidebar' %>
 <% end %>
 
-<h2>いいね！一覧</h2>
+<div><h2 class="mb-3 text-center">いいね！一覧</h2>
+<ul class="flex flex-wrap justify-center gap-3">
+<% current_user.like_items.each do |item| %>
+  <li class="list-none">
+    <%= link_to item_path(item) do %>
+      <div class="relative">
+        <%= image_tag(item.images[0], class: 'w-48 h-48') %>
+    <% if item.order %>
+      <div class="absolute w-full p-2 text-center -skew-y-12 bg-red-600 top-16">
+        <span class="text-3xl text-white bold">Sold Out!!</span>
+      </div>
+    <% end %>
+      </div>
+      <div class="item-info">
+        <h3 class="text-[0.95rem]">
+          <%= item.name %>
+        </h3>
+        <div class="flex justify-between text-[0.65rem]">
+          <span><%= item.price %>円<br />
+                <%= item.postage_type.name %></span>
+        <div class="star-btn">
+          <% if current_user && current_user.likes.find_by(item_id: item.id) %>
+              <%= fa_icon 'star md', class: 'pr-[5px] text-yellow-400' %>
+          <% else %>
+              <%= fa_icon 'star md', class: 'pr-[5px]' %>
+          <% end %>
+            <span class="star-count"><%= item.likes.count %></span>
+        </div>
+    </div>
+  </div>
+<% end %>
+<% end %>
+</li>
+</ul>
+</div>
