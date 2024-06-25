@@ -4,11 +4,11 @@
     <h2 class="name">
       <%= @item.name %>
     </h2>
-    <div class="item-img-content">
+    <div class="relative item-img-content">
       <%= image_tag(@item.images[0], class:"item-box-img", id:"main-img") %><br>
       <% if @item.order %>
-        <div class="sold-out">
-          <span>Sold Out!!</span>
+        <div class="absolute w-full p-2 text-center -skew-y-12 bg-red-600 top-52">
+          <span class="text-5xl text-white bold">Sold Out!!</span>
         </div>
       <% end %>
       <div class="thumbnail-images">
@@ -69,16 +69,17 @@
         </tr>
       </tbody>
     </table>
+    <% if current_user %>
     <div class="option">
-      <div class="favorite-btn">
-        <%= image_tag "star.png" ,class:"favorite-star-icon" ,width:"20",height:"20"%>
-        <span>お気に入り 0</span>
-      </div>
-      <div class="report-btn">
+      <%= turbo_frame_tag "like-link-#{@item.id}", class: "inline-flex items-center mr-5" do %>
+        <%= render 'likes/like', item: @item %>
+      <% end %>
+      <div class="py-2 report-btn">
         <%= image_tag "flag.png" ,class:"report-flag-icon" ,width:"20",height:"20"%>
         <span>不適切な商品の通報</span>
       </div>
     </div>
+    <% end %>
   </div>
   <%# /商品の概要 %>
 
