@@ -6,3 +6,4 @@ import "preview";
 import "gallery";
 import "el-transition";
 import "initialize-payjp";
+import "channels"

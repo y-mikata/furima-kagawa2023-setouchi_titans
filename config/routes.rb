@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post   'like' => 'likes#like',   as: 'like'
       delete 'unlike' => 'likes#unlike', as: 'unlike'
     end
+    resources :comments, only: :create
     resources :orders, only: [:index, :create] do
       collection do
         get 'refresh_card_frame'
