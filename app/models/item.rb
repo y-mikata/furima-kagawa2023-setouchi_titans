@@ -13,6 +13,7 @@ class Item < ApplicationRecord
   has_many_attached :images
   has_many :likes, dependent: :destroy
   has_many :like_users, through: :likes, source: :user
+  has_many :comments
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category

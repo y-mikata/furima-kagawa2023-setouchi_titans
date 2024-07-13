@@ -24,4 +24,5 @@ class User < ApplicationRecord
   has_many :cards, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :like_items, through: :likes, source: :item
+  has_many :comments
 end

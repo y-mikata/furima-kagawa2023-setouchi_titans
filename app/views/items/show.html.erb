@@ -1,11 +1,11 @@
 <%# 商品の概要 %>
-<div class="item-show">
-  <div class="item-box">
-    <h2 class="name">
+<div class="bg-[#f8f8f8] flex flex-col items-center sm:p-sp-l w-screen">
+  <div class="flex flex-col items-center w-full bg-white sm:w-3/4 min-w-fit sm:px-sp-3xs-5xl py-sp-s-l">
+    <h2 class="font-bold text-center text-fs-md">
       <%= @item.name %>
     </h2>
     <div class="relative item-img-content">
-      <%= image_tag(@item.images[0], class:"item-box-img", id:"main-img") %><br>
+      <%= image_tag(@item.images[0], class:"w-full max-w-[448px] min-h-[448px] max-h-[448px] aspect-square item-box-img", id:"main-img") %><br>
       <% if @item.order %>
         <div class="absolute w-full p-2 text-center -skew-y-12 bg-red-600 top-52">
           <span class="text-5xl text-white bold">Sold Out!!</span>
@@ -83,19 +83,32 @@
   </div>
   <%# /商品の概要 %>
 
-  <div class="comment-box">
-    <form>
-      <textarea class="comment-text"></textarea>
-      <p class="comment-warn">
-        相手のことを考え丁寧なコメントを心がけましょう。
-        <br>
-        不快な言葉遣いなどは利用制限や退会処分となることがあります。
-      </p>
-      <button type="submit" class="comment-btn">
-        <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
-      </button>
-    </form>
+  <div id="comments">
+    <h4 class="font-bold text-fs-md m-sp-xs">＜コメント一覧＞</h4>
+    <% @item.comments.each do |comment| %>
+      <div class="flex gap-1">
+        <p class="m-0 font-bold text-gray-500"><%= comment.user.nickname %>: </p>
+        <p class="m-0"><%= comment.text %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="w-full text-center bg-white m-sp-l sm:max-w-lg">
+    <% if user_signed_in? %>
+      <%= form_with model: [@item, @comment], id: "comment-form" do |f| %>
+        <%= f.text_area :text, class: "w-full h-[100px] p-[10px] resize-none border-2 border-[#dedede]" %>
+        <p class="text-center sm:text-left p-sp-2xs my-sp-2xs text-fs-sm">
+          相手のことを考え丁寧なコメントを心がけましょう。
+          <br>
+          不快な言葉遣いなどは利用制限や退会処分となることがあります。
+        </p>
+        <%= f.button :submit, class: "rounded-full mb-3 p-sp-xs text-white w-1/2 min-w-[150px] border border-furimaTeal bg-furimaTeal text-fs-base" do %>
+          <div class="flex justify-center gap-2">
+          <%= image_tag "comment.png", class: "mb-1", width: "20", height: "25" %>
+          <span>コメントする<span></div>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
   <div class="links">
     <a href="#" class="change-item-btn">
